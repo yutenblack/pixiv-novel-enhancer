@@ -20,6 +20,13 @@
 
   let currentThreshold = getThreshold();
   let mutedTags = [];
+  let filterEnabled = false;
+  let uiContainer = null;
+  let lastUrl = location.href;
+
+  function isTagSearchPage() {
+    return /\/tags\/[^/]+\/novels/.test(location.pathname);
+  }
 
   function extractNovelIdFromHref(href) {
       const match = /\/novel\/show(?:\.php\?id=|\/)(\d+)/.exec(href);
@@ -176,6 +183,34 @@
       }, { rootMargin: '0px 0px 2500px 0px' });
       
       autoPagerObserver.observe(autoPagerTrigger);
+  }
+
+  function destroySearchFilter() {
+    if (uiContainer && uiContainer.parentNode) {
+      uiContainer.parentNode.removeChild(uiContainer);
+    }
+    uiContainer = null;
+    if (autoPagerObserver) {
+      autoPagerObserver.disconnect();
+      autoPagerObserver = null;
+    }
+    if (autoPagerTrigger && autoPagerTrigger.parentNode) {
+      autoPagerTrigger.parentNode.removeChild(autoPagerTrigger);
+    }
+    autoPagerTrigger = null;
+    iframes.length = 0;
+    currentPageNum = 1;
+    isFetchingNextPage = false;
+    seenNovelIds.clear();
+  }
+
+  function initSearchFilter() {
+    createUI();
+    resetAndFilterNovels();
+    window.setTimeout(() => {
+      resetAndFilterNovels();
+      initAutoPager();
+    }, 1000);
   }
 
   async function loadNextPage() {
@@ -525,11 +560,32 @@
     container.appendChild(input);
     container.appendChild(applyBtn);
     container.appendChild(clearBtn);
+    uiContainer = container;
     document.body.appendChild(container);
   }
 
   let isScheduled = false;
+  let reinitTimeout = null;
   const observer = new MutationObserver(() => {
+    // Detect SPA navigation (URL change within the same document).
+    const currentUrl = location.href;
+    if (currentUrl !== lastUrl) {
+      lastUrl = currentUrl;
+      if (filterEnabled) {
+        if (reinitTimeout) clearTimeout(reinitTimeout);
+        reinitTimeout = setTimeout(() => {
+          reinitTimeout = null;
+          if (isTagSearchPage()) {
+            destroySearchFilter();
+            initSearchFilter();
+          } else if (uiContainer) {
+            destroySearchFilter();
+          }
+        }, 300);
+      }
+    }
+
+    if (!isTagSearchPage()) return;
     if (isScheduled) return;
     isScheduled = true;
     window.requestAnimationFrame(() => {
@@ -539,24 +595,24 @@
   });
   observer.observe(document.documentElement, { childList: true, subtree: true });
 
-  // Reflect tag list changes made in the popup without reloading the page.
+  // Reflect tag list / filter state changes made in the popup without reloading the page.
   chrome.storage.onChanged.addListener((changes, area) => {
     if (area !== "local") return;
     if (changes[MUTE_TAGS_KEY]) {
       mutedTags = changes[MUTE_TAGS_KEY].newValue || [];
-      resetAndFilterNovels();
+      if (isTagSearchPage()) resetAndFilterNovels();
+    }
+    if ('enableFilter' in changes) {
+      filterEnabled = changes.enableFilter.newValue;
     }
   });
 
   chrome.storage.local.get({ enableFilter: true, [MUTE_TAGS_KEY]: [] }, (res) => {
+    filterEnabled = res.enableFilter;
     if (!res.enableFilter) return;
     mutedTags = res[MUTE_TAGS_KEY] || [];
-    createUI();
-    resetAndFilterNovels();
-    window.setTimeout(() => {
-        resetAndFilterNovels();
-        initAutoPager();
-    }, 1000);
+    if (!isTagSearchPage()) return;  // Loaded on a non-search page; wait for SPA navigation.
+    initSearchFilter();
   });
 
 })();

@@ -19,7 +19,9 @@
     },
     {
       "matches": [
-        "https://www.pixiv.net/tags/*/novels*"
+        "https://www.pixiv.net/tags/*/novels*",
+        "https://www.pixiv.net/novel/show.php*",
+        "https://www.pixiv.net/novel/show/*"
       ],
       "js": [
         "search-filter.js"
