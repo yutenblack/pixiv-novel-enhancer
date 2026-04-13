@@ -23,6 +23,7 @@
 1. **Reading Layout Optimization**: Centers the novel text container on reading pages. The native structure and sidebars are preserved and symmetrically aligned.
 2. **Search Page Enhancements**:
    - **Bookmark Filtering**: Hides novels from search results that fail to meet a user-defined bookmark threshold.
+   - **Tag Mute**: Registers tags in the extension popup (e.g. "死ネタ", specific ship names) and permanently hides any works carrying those tags from search results. Multiple tags can be registered; a work is hidden if it matches any one of them (exact match).
    - **Infinite Scrolling**: Automatically loads and appends the next page when reaching the bottom of the search results view. *(Note: Infinite scrolling is not implemented on novel reading pages.)*
 
 ### Usage
@@ -49,6 +50,7 @@ Please note that no warranty or continuous support is provided as this is active
 1. **リーダーレイアウトの最適化**: 小説の閲覧ページにおいて、サイドバー等の既存UIを保持したまま、本文コンテナを画面中央に配置します。
 2. **検索結果の拡張**: 検索一覧ページにおいて、以下の機能を提供します。
    - **ブックマーク数フィルタリング**: 設定パネルで指定した最低ブックマーク数に満たない作品を非表示にします。
+   - **タグミュート**: 拡張機能のポップアップでタグ（例：「死ネタ」「特定のCP名」など）を登録しておくと、そのタグを持つ作品を検索結果からDOMごと非表示にします。複数登録可能で、いずれか1つでも一致した作品が非表示になります（完全一致）。
    - **無限スクロール**: ページ末尾に到達した際、自動的に次ページの検索結果を追加します。（※小説閲覧ページ側の無限スクロール機能は含まれません）
 
 ### 利用方法
@@ -61,4 +63,4 @@ Please note that no warranty or continuous support is provided as this is active
 
 ### 免責事項
 自由に改変・再利用してください。
-本機能は初期段階（v0.1.0）での公開であり、完全な動作保証や継続的なサポートは提供しておりません。
+本機能は初期段階（v0.2.0）での公開であり、完全な動作保証や継続的なサポートは提供しておりません。

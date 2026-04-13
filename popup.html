@@ -11,7 +11,7 @@
       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path></svg>
       <h2>Pixiv Novel Enhancer</h2>
     </div>
-    <span class="version">v0.1.0</span>
+    <span class="version">v0.2.0</span>
   </div>
   
   <div class="settings-container">
@@ -35,6 +35,23 @@
         </label>
       </div>
       <span class="setting-desc">Auto-scrolls and hides novels by bookmarks.<span class="ja-desc">ブクマ数による除外と自動での次ページ読込を行います。</span></span>
+    </div>
+
+    <div class="setting-item" id="mute-tags-section">
+      <div class="setting-header">
+        <span class="setting-title">Tag Mute<span class="ja-title">タグミュート</span></span>
+        <span class="tag-count-badge" id="tag-count-badge">0</span>
+      </div>
+      <span class="setting-desc">Hide search results that include specified tags.<span class="ja-desc">指定したタグを含む作品を検索結果から非表示にします。</span></span>
+
+      <div class="tag-input-row">
+        <input type="text" id="mute-tag-input" placeholder="タグを入力…" maxlength="100" autocomplete="off" spellcheck="false">
+        <button id="mute-tag-add-btn" title="タグを追加">+</button>
+      </div>
+
+      <div class="tag-badge-list" id="tag-badge-list">
+        <!-- Dynamically rendered by popup.js -->
+      </div>
     </div>
   </div>
 

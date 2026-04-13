@@ -3,6 +3,7 @@
 
   const STORAGE_KEY = "pxnr_bookmark_threshold";
   const DEFAULT_THRESHOLD = 100;
+  const MUTE_TAGS_KEY = "pxnr_mute_tags";
 
   function getThreshold() {
     const saved = window.localStorage.getItem(STORAGE_KEY);
@@ -18,6 +19,7 @@
   }
 
   let currentThreshold = getThreshold();
+  let mutedTags = [];
 
   function extractNovelIdFromHref(href) {
       const match = /\/novel\/show(?:\.php\?id=|\/)(\d+)/.exec(href);
@@ -80,6 +82,29 @@
     return maxFoundValue;
   }
 
+  /**
+   * Returns an array of tag strings found within a card element.
+   * Tags are identified by anchor elements linking to pixiv tag pages.
+   */
+  function getTagsFromCard(cardElement) {
+    const tagAnchors = cardElement.querySelectorAll('a[href*="/tags/"]');
+    const tags = [];
+    for (const anchor of tagAnchors) {
+      const text = (anchor.textContent || "").trim();
+      if (text) tags.push(text);
+    }
+    return tags;
+  }
+
+  /**
+   * Returns true if any of the card's tags match an entry in mutedTags (exact match).
+   */
+  function isMutedByTag(cardElement) {
+    if (mutedTags.length === 0) return false;
+    const cardTags = getTagsFromCard(cardElement);
+    return cardTags.some((tag) => mutedTags.includes(tag));
+  }
+
   function applyFilterToCard(card, link) {
     if (card.dataset.pxnrCardFiltered === "true") {
       link.dataset.pxnrLinkChecked = "true";
@@ -87,7 +112,7 @@
     }
     const count = getBookmarkCount(card);
     card.style.display = "";
-    if (count < currentThreshold) {
+    if (count < currentThreshold || isMutedByTag(card)) {
       card.style.display = "none";
     }
     card.dataset.pxnrCardFiltered = "true";
@@ -489,14 +514,24 @@
   });
   observer.observe(document.documentElement, { childList: true, subtree: true });
 
-  chrome.storage.local.get({ enableFilter: true }, (res) => {
+  // Reflect tag list changes made in the popup without reloading the page.
+  chrome.storage.onChanged.addListener((changes, area) => {
+    if (area !== "local") return;
+    if (changes[MUTE_TAGS_KEY]) {
+      mutedTags = changes[MUTE_TAGS_KEY].newValue || [];
+      resetAndFilterNovels();
+    }
+  });
+
+  chrome.storage.local.get({ enableFilter: true, [MUTE_TAGS_KEY]: [] }, (res) => {
     if (!res.enableFilter) return;
+    mutedTags = res[MUTE_TAGS_KEY] || [];
     createUI();
     filterNovels();
     window.setTimeout(() => {
         filterNovels();
         initAutoPager();
-    }, 1000); 
+    }, 1000);
   });
 
 })();
