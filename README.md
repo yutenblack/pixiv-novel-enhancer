@@ -22,7 +22,7 @@
    - **Infinite Scrolling**: Automatically loads and appends the next page when reaching the bottom of the search results view. *(Note: Infinite scrolling is not implemented on novel reading pages.)*
 
 ### Usage
-1. Download or clone this repository and extract the folder.
+1. Click the green **Code** button at the top of this repository, select **Download ZIP**, and extract the downloaded folder.
 2. Open the Extensions management page in Chrome (`chrome://extensions/`).
 3. Enable **"Developer mode"** in the top right corner.
 4. Click **"Load unpacked"** and select the directory containing the extension files.
@@ -51,7 +51,7 @@ Please note that no warranty or continuous support is provided.
    - **無限スクロール**: ページ末尾に到達した際、自動的に次ページの検索結果を追加します。（※小説閲覧ページ側の無限スクロール機能は含まれません）
 
 ### 利用方法
-1. 本リポジトリをダウンロードし、フォルダを展開します。
+1. リポジトリ上部にある緑色の「**Code**」ボタンをクリックし、「**Download ZIP**」を選択してダウンロードしたファイルを解凍（展開）します。
 2. Chromeブラウザの拡張機能管理画面 (`chrome://extensions/`) を開きます。
 3. 右上の「デベロッパーモード」を有効にします。
 4. 「パッケージ化されていない拡張機能を読み込む」をクリックし、展開したフォルダを選択します。
