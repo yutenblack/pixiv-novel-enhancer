@@ -527,9 +527,9 @@
     if (!res.enableFilter) return;
     mutedTags = res[MUTE_TAGS_KEY] || [];
     createUI();
-    filterNovels();
+    resetAndFilterNovels();
     window.setTimeout(() => {
-        filterNovels();
+        resetAndFilterNovels();
         initAutoPager();
     }, 1000);
   });

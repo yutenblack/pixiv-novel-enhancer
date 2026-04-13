@@ -32,7 +32,7 @@
 3. Enable **"Developer mode"** in the top right corner.
 4. Click **"Load unpacked"** and select the directory containing the extension files.
 5. Visit any Pixiv novel reading page or search page to see the features in action.
-   - **Configuration**: Click the extension icon to open the popup menu. From there, you can independently toggle the reading layout and search filter features on or off.
+   - **Configuration**: Click the extension icon to open the popup menu. Toggle the reading layout and search filter independently. To mute tags, enter a tag name in the **Tag Mute** field and press Enter or click **+**. Registered tags are shown as badges and can be removed individually or cleared all at once.
 
 ### Notice
 Feel free to modify and reuse this extension as you like.
@@ -59,7 +59,7 @@ Please note that no warranty or continuous support is provided as this is active
 3. 右上の「デベロッパーモード」を有効にします。
 4. 「パッケージ化されていない拡張機能を読み込む」をクリックし、展開したフォルダを選択します。
 5. Pixivの小説閲覧ページ、または小説検索ページを開くと拡張機能が適用されます。
-   - **設定の変更**: ブラウザのアドレスバー横にある拡張機能アイコンをクリックすると設定パネルが表示されます。各機能のオン・オフを個別に切り替えることができます。
+   - **設定の変更**: ブラウザのアドレスバー横にある拡張機能アイコンをクリックすると設定パネルが表示されます。リーダー表示とフィルタ機能のオン・オフを個別に切り替えられます。タグミュートは「**Tag Mute**」欄にタグ名を入力してEnterキーまたは「**+**」ボタンで登録します。登録済みタグはバッジ形式で表示され、個別削除または「**Clear all**」で一括削除できます。
 
 ### 免責事項
 自由に改変・再利用してください。
