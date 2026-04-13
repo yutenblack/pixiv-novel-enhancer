@@ -6,6 +6,8 @@
 
   **A Chrome extension that optimizes reading and searching for Pixiv novels.**<br>
   **Pixiv小説の閲覧および検索を最適化するChrome拡張機能です。**<br>
+<br>
+  <img src="https://github.com/user-attachments/assets/40bf95e9-d765-4f01-9d69-30f019e8de93" width="600" alt="Pixiv Novel Enhancer Screenshot">
 
 
   <p>
