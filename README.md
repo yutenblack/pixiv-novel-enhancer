@@ -1,19 +1,23 @@
 <div align="center">
   <h1>Pixiv Novel Enhancer</h1>
-</div>
 
-<p align="center">
-  Read this document in: <a href="#english">English</a> | <a href="#japanese">日本語</a>
-</p>
+  ![Chrome Extension](https://img.shields.io/badge/platform-Chrome_Extension-blue.svg)
+  ![License](https://img.shields.io/badge/license-MIT-green.svg)
+
+  **A Chrome extension that optimizes reading and searching for Pixiv novels.**<br>
+  **Pixiv小説の閲覧および検索を最適化するChrome拡張機能です。**<br>
+
+
+  <p>
+    <a href="#english">English</a> | <a href="#japanese">日本語</a>
+  </p>
+</div>
 
 ---
 
 ## <a id="english"></a> English
 
-![Chrome Extension](https://img.shields.io/badge/platform-Chrome_Extension-blue.svg)
-![License](https://img.shields.io/badge/license-MIT-green.svg)
-
-**Pixiv Novel Enhancer** is a Chrome extension that optimizes reading and searching for Pixiv novels.
+**Pixiv Novel Enhancer** improves your reading experience with a centered layout and configurable search filters.
 
 ### Features
 1. **Reading Layout Optimization**: Centers the novel text container on reading pages. The native structure and sidebars are preserved and symmetrically aligned.
@@ -31,7 +35,7 @@
 
 ### Notice
 Feel free to modify and reuse this extension as you like.
-Please note that no warranty or continuous support is provided.
+Please note that no warranty or continuous support is provided as this is actively under development.
 
 ---
 
@@ -39,10 +43,7 @@ Please note that no warranty or continuous support is provided.
 
 ## <a id="japanese"></a> 日本語
 
-![Chrome Extension](https://img.shields.io/badge/platform-Chrome_Extension-blue.svg)
-![License](https://img.shields.io/badge/license-MIT-green.svg)
-
-**Pixiv Novel Enhancer**は、Pixiv小説の閲覧および検索を最適化するChrome拡張機能です。
+**Pixiv Novel Enhancer**は、Pixiv小説の閲覧体験を向上させ、検索時のノイズを減らすためのChrome拡張機能です。
 
 ### 主な機能
 1. **リーダーレイアウトの最適化**: 小説の閲覧ページにおいて、サイドバー等の既存UIを保持したまま、本文コンテナを画面中央に配置します。
@@ -60,4 +61,4 @@ Please note that no warranty or continuous support is provided.
 
 ### 免責事項
 自由に改変・再利用してください。
-動作保証やサポートは提供しておりません。
+本機能は初期段階（v0.1.0）での公開であり、完全な動作保証や継続的なサポートは提供しておりません。
