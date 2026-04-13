@@ -24,8 +24,14 @@
   let uiContainer = null;
   let lastUrl = location.href;
 
-  function isTagSearchPage() {
-    return /\/tags\/[^/]+\/novels/.test(location.pathname);
+  function isNovelSearchPage() {
+    if (/\/tags\/[^/]+\/novels/.test(location.pathname)) return true;
+    if (location.pathname === '/search') {
+      try {
+        return new URLSearchParams(location.search).get('type') === 'novel';
+      } catch (_) { return false; }
+    }
+    return false;
   }
 
   function extractNovelIdFromHref(href) {
@@ -575,7 +581,7 @@
         if (reinitTimeout) clearTimeout(reinitTimeout);
         reinitTimeout = setTimeout(() => {
           reinitTimeout = null;
-          if (isTagSearchPage()) {
+          if (isNovelSearchPage()) {
             destroySearchFilter();
             initSearchFilter();
           } else if (uiContainer) {
@@ -585,7 +591,7 @@
       }
     }
 
-    if (!isTagSearchPage()) return;
+    if (!isNovelSearchPage()) return;
     if (isScheduled) return;
     isScheduled = true;
     window.requestAnimationFrame(() => {
@@ -600,7 +606,7 @@
     if (area !== "local") return;
     if (changes[MUTE_TAGS_KEY]) {
       mutedTags = changes[MUTE_TAGS_KEY].newValue || [];
-      if (isTagSearchPage()) resetAndFilterNovels();
+      if (isNovelSearchPage()) resetAndFilterNovels();
     }
     if ('enableFilter' in changes) {
       filterEnabled = changes.enableFilter.newValue;
@@ -611,7 +617,7 @@
     filterEnabled = res.enableFilter;
     if (!res.enableFilter) return;
     mutedTags = res[MUTE_TAGS_KEY] || [];
-    if (!isTagSearchPage()) return;  // Loaded on a non-search page; wait for SPA navigation.
+    if (!isNovelSearchPage()) return;  // Loaded on a non-search page; wait for SPA navigation.
     initSearchFilter();
   });
 
