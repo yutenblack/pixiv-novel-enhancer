@@ -1,0 +1,169 @@
+body {
+  margin: 0;
+  padding: 0;
+  width: 360px;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  color: #333;
+  background-color: #f7f9fa;
+}
+
+.header {
+  background-color: #0096fa;
+  color: white;
+  padding: 14px 20px;
+  box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.header h2 {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.version {
+  font-size: 11px;
+  font-weight: 500;
+  background: rgba(255,255,255,0.2);
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+
+.settings-container {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.setting-item {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  background: white;
+  padding: 16px;
+  border-radius: 12px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.05), 0 1px 2px rgba(0,0,0,0.02);
+  border: 1px solid #edf1f4;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.setting-item:hover {
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+  transform: translateY(-1px);
+}
+
+.setting-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.setting-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: #0f1419;
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+}
+
+.ja-title {
+  font-size: 11px;
+  font-weight: 500;
+  color: #71767b;
+  letter-spacing: 0.02em;
+}
+
+.setting-desc {
+  font-size: 12px;
+  color: #536471;
+  line-height: 1.5;
+  width: 100%;
+}
+
+.ja-desc {
+  display: block;
+  font-size: 11px;
+  color: #8b98a5;
+  margin-top: 2px;
+}
+
+.footer {
+  padding: 14px 20px;
+  background-color: #eef2f5;
+  border-top: 1px solid #e1e8ed;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  color: #536471;
+}
+
+#status-msg {
+  font-size: 11px;
+  font-weight: 500;
+}
+
+.ja-text {
+  font-weight: normal;
+  color: #8b98a5;
+}
+
+/* トグルスイッチのスタイル */
+.toggle-switch {
+  position: relative;
+  display: inline-block;
+  width: 44px;
+  height: 24px;
+  flex-shrink: 0;
+}
+
+.toggle-switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #cbd5e1;
+  transition: .3s cubic-bezier(0.4, 0, 0.2, 1);
+  border-radius: 24px;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 18px;
+  width: 18px;
+  left: 3px;
+  bottom: 3px;
+  background-color: white;
+  transition: .3s cubic-bezier(0.4, 0, 0.2, 1);
+  border-radius: 50%;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+input:checked + .slider {
+  background-color: #0096fa;
+}
+
+input:checked + .slider:before {
+  transform: translateX(20px);
+}

@@ -1,0 +1,51 @@
+{
+  "manifest_version": 3,
+  "name": "Pixiv Novel Enhancer",
+  "description": "Improve Pixiv novel readability with a centered reader panel and full-text loading.",
+  "version": "0.1.0",
+  "content_scripts": [
+    {
+      "matches": [
+        "https://www.pixiv.net/novel/show.php*",
+        "https://www.pixiv.net/novel/show/*"
+      ],
+      "js": [
+        "content-script.js"
+      ],
+      "css": [
+        "styles.css"
+      ],
+      "run_at": "document_idle"
+    },
+    {
+      "matches": [
+        "https://www.pixiv.net/tags/*/novels*"
+      ],
+      "js": [
+        "search-filter.js"
+      ],
+      "run_at": "document_idle"
+    }
+  ],
+  "host_permissions": [
+    "https://www.pixiv.net/*"
+  ],
+  "permissions": [
+    "storage",
+    "tabs"
+  ],
+  "icons": {
+    "16": "images/icon-16.png",
+    "48": "images/icon-48.png",
+    "128": "images/icon-128.png"
+  },
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "Pixiv Novel Enhancer",
+    "default_icon": {
+      "16": "/images/icon-16.png",
+      "48": "/images/icon-48.png",
+      "128": "/images/icon-128.png"
+    }
+  }
+}

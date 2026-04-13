@@ -1,0 +1,63 @@
+/* 
+ * Pixiv Novel Enhancer - Reading Layout Styles
+ */
+
+/* 1. Symmetric Grid Wrapper */
+.pxnr-symmetric-wrapper {
+  max-width: none !important;
+  width: 100% !important;
+  display: grid !important;
+
+  /* 
+   * Create a symmetrical 3-column layout to center the main content.
+   * Left: Empty space matching the sidebar width
+   * Center: Main content container
+   * Right: Actual sidebar
+   */
+  grid-template-columns: var(--pxnr-sidebar-w, 300px) minmax(auto, 900px) var(--pxnr-sidebar-w, 300px) !important;
+  justify-content: center !important;
+  gap: 32px !important;
+  
+  box-sizing: border-box !important;
+  padding: 0 24px !important;
+  margin: 0 auto !important;
+}
+
+/* 2. Column Placements */
+.pxnr-symmetric-main {
+  grid-column: 2 !important;
+  width: 100% !important;
+  margin: 0 !important;
+}
+
+.pxnr-symmetric-sidebar {
+  grid-column: 3 !important;
+  width: var(--pxnr-sidebar-w, 300px) !important;
+  margin: 0 !important;
+}
+
+/* 3. Fallbacks */
+.pxnr-fallback-center {
+  margin: 0 auto !important;
+  width: 100% !important;
+  max-width: 900px !important;
+}
+
+/* Single column fallback for smaller screens */
+@media (max-width: 1300px) {
+  .pxnr-symmetric-wrapper {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    grid-template-columns: none !important;
+  }
+  .pxnr-symmetric-main,
+  .pxnr-symmetric-sidebar {
+    width: 100% !important;
+    max-width: 900px !important;
+    margin: 0 auto !important;
+  }
+  .pxnr-symmetric-sidebar {
+    margin-top: 32px !important;
+  }
+}
