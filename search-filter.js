@@ -274,6 +274,16 @@
               baseTag.target = "_parent";
               iframeDoc.head.appendChild(baseTag);
 
+              // Remove bottom spacing on wrapper elements to prevent blank space
+              // below the last visible card. The siblings are already hidden, but
+              // intermediate wrappers may still have padding-bottom / margin-bottom.
+              let wrapperEl = listContainer.parentElement;
+              while (wrapperEl && wrapperEl !== iframeDoc.body && wrapperEl !== iframeDoc.documentElement) {
+                  wrapperEl.style.paddingBottom = '0';
+                  wrapperEl.style.marginBottom = '0';
+                  wrapperEl = wrapperEl.parentElement;
+              }
+
               const resetStyle = iframeDoc.createElement('style');
               resetStyle.textContent = `
                   body, html {

@@ -63,4 +63,4 @@ Please note that no warranty or continuous support is provided as this is active
 
 ### 免責事項
 自由に改変・再利用してください。
-本機能は初期段階（v0.2.0）での公開であり、完全な動作保証や継続的なサポートは提供しておりません。
+完全な動作保証や継続的なサポートは提供しておりません。
