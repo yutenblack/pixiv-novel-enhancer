@@ -3,6 +3,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const toggleFilter = document.getElementById('toggle-filter');
   const muteTagInput = document.getElementById('mute-tag-input');
   const muteTagAddBtn = document.getElementById('mute-tag-add-btn');
+  const muteTagClearBtn = document.getElementById('mute-tag-clear-btn');
   const tagBadgeList = document.getElementById('tag-badge-list');
   const tagCountBadge = document.getElementById('tag-count-badge');
   const muteTagsSection = document.getElementById('mute-tags-section');
@@ -66,6 +67,14 @@ document.addEventListener('DOMContentLoaded', () => {
     renderTagBadges();
   }
 
+  // 一括削除
+  muteTagClearBtn.addEventListener('click', () => {
+    if (mutedTags.length === 0) return;
+    mutedTags = [];
+    saveMutedTags();
+    renderTagBadges();
+  });
+
   // ストレージへ保存（search-filter.js の onChanged が自動検知する）
   function saveMutedTags() {
     chrome.storage.local.set({ [MUTE_TAGS_KEY]: mutedTags });
@@ -75,6 +84,7 @@ document.addEventListener('DOMContentLoaded', () => {
   function renderTagBadges() {
     tagBadgeList.innerHTML = '';
     tagCountBadge.textContent = mutedTags.length;
+    muteTagClearBtn.classList.toggle('hidden', mutedTags.length === 0);
 
     for (const tag of mutedTags) {
       const badge = document.createElement('span');

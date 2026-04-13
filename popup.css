@@ -169,6 +169,12 @@ input:checked + .slider:before {
 }
 
 /* タグミュート */
+.tag-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
 .tag-count-badge {
   font-size: 11px;
   font-weight: 600;
@@ -278,4 +284,31 @@ input:checked + .slider:before {
 #mute-tags-section.disabled {
   opacity: 0.45;
   pointer-events: none;
+}
+
+#mute-tag-clear-btn {
+  font-size: 11px;
+  font-weight: 500;
+  color: #536471;
+  background: none;
+  border: 1px solid #cfd9e0;
+  border-radius: 8px;
+  padding: 2px 8px;
+  cursor: pointer;
+  transition: background-color 0.15s, color 0.15s;
+  white-space: nowrap;
+}
+
+#mute-tag-clear-btn:hover {
+  background-color: #ffeaea;
+  border-color: #f0a0a0;
+  color: #c0392b;
+}
+
+#mute-tag-clear-btn:active {
+  background-color: #fdd;
+}
+
+#mute-tag-clear-btn.hidden {
+  display: none;
 }
