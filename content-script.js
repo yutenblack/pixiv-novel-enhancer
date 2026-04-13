@@ -51,7 +51,9 @@
       }
     }
     
-    const candidates = rootObj.querySelectorAll("div, article, section");
+    // Generic fallback: search within <main> to avoid matching nav/header containers.
+    const searchScope = rootObj.querySelector("main") || rootObj;
+    const candidates = searchScope.querySelectorAll("div, article, section");
     for (const node of candidates) {
       if (isValidTextLength(node)) return node;
     }
