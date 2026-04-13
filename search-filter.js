@@ -173,7 +173,7 @@
           if (entries[0].isIntersecting) {
               loadNextPage();
           }
-      }, { rootMargin: '0px 0px 1500px 0px' });
+      }, { rootMargin: '0px 0px 2500px 0px' });
       
       autoPagerObserver.observe(autoPagerTrigger);
   }
@@ -213,45 +213,60 @@
           insertTarget.insertBefore(divider, insertBeforeNode);
 
           frame = document.createElement('iframe');
-          frame.src = nextUrl;
           frame.style.width = '100%';
           frame.style.height = '1px';
           frame.style.opacity = '0';
           frame.style.border = 'none';
           frame.style.display = 'block';
-          frame.style.transition = 'opacity 0.2s'; 
-          frame.setAttribute('sandbox', 'allow-same-origin allow-scripts'); 
-          
-          insertTarget.insertBefore(frame, insertBeforeNode);
-          iframes.push(frame);
+          frame.style.transition = 'opacity 0.2s';
+          frame.setAttribute('sandbox', 'allow-same-origin allow-scripts');
 
           let iframeDoc;
-          
-          const listContainer = await new Promise((resolve) => {
-              let attempts = 0;
-              const intervalID = setInterval(() => {
-                  attempts++;
-                  try {
-                      iframeDoc = frame.contentDocument || frame.contentWindow.document;
-                      if (!iframeDoc) return;
-                      
-                      const links = iframeDoc.querySelectorAll('a[href*="/novel/show"]');
-                      if (links.length > 0) {
-                          clearInterval(intervalID);
-                          const card = getCardContainer(links[0], iframeDoc);
-                          if (card && card.parentElement) {
-                              resolve(card.parentElement);
-                          } else {
-                              resolve(null);
-                          }
-                      }
-                  } catch (e) {}
 
-                  if (attempts > 80) { 
-                      clearInterval(intervalID);
-                      resolve(null);
-                  }
-              }, 100);
+          const listContainer = await new Promise((resolve) => {
+              let resolved = false;
+              let pollingInterval = null;
+
+              function done(value) {
+                  if (resolved) return;
+                  resolved = true;
+                  if (pollingInterval) clearInterval(pollingInterval);
+                  resolve(value);
+              }
+
+              function startPolling() {
+                  if (resolved) return;
+                  let attempts = 0;
+                  pollingInterval = setInterval(() => {
+                      attempts++;
+                      try {
+                          iframeDoc = frame.contentDocument || frame.contentWindow.document;
+                          if (!iframeDoc) return;
+
+                          const links = iframeDoc.querySelectorAll('a[href*="/novel/show"]');
+                          if (links.length > 0) {
+                              const card = getCardContainer(links[0], iframeDoc);
+                              done(card && card.parentElement ? card.parentElement : null);
+                              return;
+                          }
+                      } catch (e) {}
+
+                      if (attempts > 60) {  // 60 × 50ms = 3s after load
+                          done(null);
+                      }
+                  }, 50);
+              }
+
+              // Start polling once the iframe HTML is ready.
+              frame.addEventListener('load', startPolling);
+
+              // Hard timeout in case the load event never fires.
+              setTimeout(() => done(null), 12000);
+
+              // Set src after the listener is registered, then insert.
+              frame.src = nextUrl;
+              insertTarget.insertBefore(frame, insertBeforeNode);
+              iframes.push(frame);
           });
 
           if (listContainer) {
@@ -328,12 +343,10 @@
               currentPageNum++;
               isFetchingNextPage = false;
 
-              setTimeout(() => {
-                  if (autoPagerTrigger && autoPagerObserver) {
-                      autoPagerObserver.unobserve(autoPagerTrigger);
-                      autoPagerObserver.observe(autoPagerTrigger);
-                  }
-              }, 100);
+              if (autoPagerTrigger && autoPagerObserver) {
+                  autoPagerObserver.unobserve(autoPagerTrigger);
+                  autoPagerObserver.observe(autoPagerTrigger);
+              }
 
           } else {
               if (frame && frame.parentNode) frame.parentNode.removeChild(frame);
